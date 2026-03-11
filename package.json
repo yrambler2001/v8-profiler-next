@@ -1,6 +1,6 @@
 {
-  "name": "v8-profiler-next",
-  "version": "1.10.0",
+  "name": "@yrambler2001/v8-profiler-next",
+  "version": "1.11.0",
   "description": "node bindings for the v8 profiler",
   "main": "dispatch.js",
   "binary": {
@@ -8,7 +8,7 @@
     "module_path": "./build/binding/{configuration}/{node_abi}-{platform}-{arch}/",
     "remote_path": "./v{version}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    "host": "https://github.com/hyj1991/v8-profiler-next/releases/download"
+    "host": "https://github.com/yrambler2001/v8-profiler-next/releases/download"
   },
   "scripts": {
     "install": "node scripts/install.js",
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hyj1991/v8-profiler-next.git"
+    "url": "git+https://github.com/yrambler2001/v8-profiler-next.git"
   },
   "keywords": [
     "node",
@@ -40,9 +40,9 @@
   "author": "https://github.com/hyj1991",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hyj1991/v8-profiler-next/issues"
+    "url": "https://github.com/yrambler2001/v8-profiler-next/issues"
   },
-  "homepage": "https://github.com/hyj1991/v8-profiler-next#readme",
+  "homepage": "https://github.com/yrambler2001/v8-profiler-next#readme",
   "files": [
     "lib",
     "scripts",
@@ -55,7 +55,7 @@
   ],
   "dependencies": {
     "@xprofiler/node-pre-gyp": "^1.0.9",
-    "nan": "^2.18.0"
+    "nan": "^2.22.0"
   },
   "devDependencies": {
     "chai": "^4.3.6",

@@ -116,7 +116,7 @@ INNER_METHOD(InnerSamplingHeapProfiler::StopSamplingHeapProfiling) {
   Local<Object> result = Nan::New<Object>();
   Nan::Set(result, Nan::New<String>("head").ToLocalChecked(), js_node);
   info.GetReturnValue().Set(result);
-  free(profile);
+  delete profile;
   // stop sampling heap profile
   v8::Isolate::GetCurrent()->GetHeapProfiler()->StopSamplingHeapProfiler();
 #endif

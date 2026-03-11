@@ -30,9 +30,9 @@
       ],
       'conditions':[
         ['OS == "linux"', {
-          'cflags': [
+          'cflags_cc': [
             '-O2',
-            '-std=c++17',
+            '-std=c++20',
             '-Wno-sign-compare',
             '-Wno-cast-function-type',
           ],
@@ -40,13 +40,22 @@
         ['OS == "mac"', {
           'xcode_settings': {
             'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',
-            'OTHER_CFLAGS': [
-              '-std=c++17',
+            'CLANG_CXX_LANGUAGE_STANDARD': 'c++20',
+            'MACOSX_DEPLOYMENT_TARGET': '12.0',
+            'OTHER_CPLUSPLUSFLAGS': [
+              '-std=c++20',
               '-Wconversion',
               '-Wno-sign-conversion',
             ]
           }
         }],
+        ['OS == "win"', {
+          'msvs_settings': {
+            'VCCLCompilerTool': {
+              'AdditionalOptions': ['/std:c++20']
+            }
+          }
+        }]
       ]
     },
   ],

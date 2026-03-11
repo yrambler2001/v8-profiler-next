@@ -1,0 +1,111 @@
+name: Prebuild and Release
+on:
+  release:
+    types: [created]
+
+jobs:
+  prebuild:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Windows x64
+          - os: windows-latest
+            node-version: 18
+            arch: x64
+          - os: windows-latest
+            node-version: 20
+            arch: x64
+          - os: windows-latest
+            node-version: 22
+            arch: x64
+          - os: windows-latest
+            node-version: 24
+            arch: x64
+          # Linux arm64
+          - os: ubuntu-24.04-arm
+            node-version: 18
+            arch: arm64
+          - os: ubuntu-24.04-arm
+            node-version: 20
+            arch: arm64
+          - os: ubuntu-24.04-arm
+            node-version: 22
+            arch: arm64
+          - os: ubuntu-24.04-arm
+            node-version: 24
+            arch: arm64
+          # macOS x64
+          - os: macos-14
+            node-version: 18
+            arch: x64
+          - os: macos-14
+            node-version: 20
+            arch: x64
+          - os: macos-14
+            node-version: 22
+            arch: x64
+          - os: macos-14
+            node-version: 24
+            arch: arm64
+          # macOS arm64
+          - os: macos-14
+            node-version: 18
+            arch: arm64
+          - os: macos-14
+            node-version: 20
+            arch: arm64
+          - os: macos-14
+            node-version: 22
+            arch: arm64
+          - os: macos-14
+            node-version: 24
+            arch: arm64
+          # Linux x64
+          - os: ubuntu-latest
+            node-version: 18
+            arch: x64
+          - os: ubuntu-latest
+            node-version: 20
+            arch: x64
+          - os: ubuntu-latest
+            node-version: 22
+            arch: x64
+          - os: ubuntu-latest
+            node-version: 24
+            arch: x64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build native module
+        run: npx node-pre-gyp rebuild
+
+      - name: Package prebuilt binary
+        run: npx node-pre-gyp package
+
+      - name: Test packaged binary
+        run: npx node-pre-gyp testpackage
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/stage/**/*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

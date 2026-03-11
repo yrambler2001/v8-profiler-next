@@ -14,7 +14,7 @@ v8-profiler-next provides [node](https://github.com/nodejs/node) bindings for th
 ## I. Quick Start
 
 * **Compatibility**
-  * **node version:** v4.x ~ v21.x
+  * **node version:** v18.x ~ v24.x
   * **platform:** mac, linux, windows
 
 This module can also be used in `worker_threads`.
