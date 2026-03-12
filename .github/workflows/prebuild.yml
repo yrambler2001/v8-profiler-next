@@ -47,7 +47,7 @@ jobs:
             arch: x64
           - os: macos-14
             node-version: 24
-            arch: arm64
+            arch: x64
           # macOS arm64
           - os: macos-14
             node-version: 18
@@ -90,7 +90,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-
+          architecture: ${{ matrix.arch }}
       - name: Install dependencies
         run: npm install
 
