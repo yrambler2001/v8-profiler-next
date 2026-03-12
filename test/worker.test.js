@@ -69,34 +69,6 @@ function getOutput(proc) {
   });
 }
 
-function filterStderr(stderr) {
-  if (!stderr) {
-    return '';
-  }
-  // Filter out known Node.js deprecation warnings that are not errors
-  return stderr
-    .split('\n')
-    .filter(line => {
-      if (!line.trim()) {
-        return false;
-      }
-      // Ignore DeprecationWarning lines (e.g., DEP0169 for url.parse())
-      if (line.includes('DeprecationWarning:')) {
-        return false;
-      }
-      // Ignore trace-deprecation hint lines
-      if (line.includes('Use `node --trace-deprecation ...`')) {
-        return false;
-      }
-      // Ignore ExperimentalWarning lines
-      if (line.includes('ExperimentalWarning:')) {
-        return false;
-      }
-      return true;
-    })
-    .join('\n')
-    .trim();
-}
 
 
 (canIUseWorkerThreads ? describe : describe.skip)('worker_threads', function () {
@@ -120,8 +92,7 @@ function filterStderr(stderr) {
     });
 
     it('worker_threads should exit succeed', function () {
-      const meaningfulStderr = filterStderr(output.stderr);
-      assert(!meaningfulStderr, `Unexpected stderr output: ${meaningfulStderr}`);
+      assert(!output.stderr);
       console.log(output.stdout);
       const stdout = output.stdout.split('\n').filter(line => line && !line.match(/\[thread \d+/)).join('');
       const { code: workerExitCode } = JSON.parse(stdout);
